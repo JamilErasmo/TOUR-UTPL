@@ -1,0 +1,43 @@
+<div class="container w-screen">
+	<div class="screen">
+		<div class="screen__content">
+			<form class="login" #userLogin="ngForm" (ngSubmit)="ejecutar(userLogin)">
+				<div class="login__field">
+					<i class="login__icon fas fa-user"></i>
+					<input [(ngModel)]="user.username" name="username" type="text" class="login__input" placeholder="User name / Email" required>
+					<small id="username2-help" class="p-error block" *ngIf="userLogin.submitted && userLogin.controls['username'].errors">* El usuario es obligatorio.</small>
+				</div>
+				<div class="login__field">
+					<i class="login__icon fas fa-lock"></i>
+					<input [(ngModel)]="user.password" name="password" type="password" class="login__input" placeholder="Password" required>
+					<small id="username2-help" class="p-error block" *ngIf="userLogin.submitted && userLogin.controls['password'].errors">* El password es obligatorio.</small>
+				</div>
+				<button class="button login__submit" type="submit">
+					<span class="button__text">INGRESAR...</span>
+					<i class="button__icon fas fa-chevron-right"></i>
+				</button>
+			</form>
+			<div class="social-login">
+				<h3>log in via</h3>
+				<div class="social-icons">
+					<button style="color: white; margin: -10px;" pButton pRipple type="button" label=" Google" icon="fa-brands fa-google" class="social-login__icon p-button-sm p-button-text" (click)="ingresar()"></button>
+					<!-- <a href="#" class="social-login__icon fab fa-google" (onClick)="ingresar()"></a>
+					<a href="#" class="social-login__icon fab fa-facebook"></a>
+					<a href="#" class="social-login__icon fab fa-twitter"></a> -->					
+				</div>
+				<div class="social-icons">
+					<button style="color: white; margin: -10px;" pButton pRipple type="button" label=" microsoft" icon="fa-brands fa-microsoft" class="social-login__icon p-button-sm p-button-text" (click)="ingresarm()"></button>
+					<!-- <a href="#" class="social-login__icon fab fa-google" (onClick)="ingresar()"></a>
+					<a href="#" class="social-login__icon fab fa-facebook"></a>
+					<a href="#" class="social-login__icon fab fa-twitter"></a> -->					
+				</div>
+			</div>
+		</div>
+		<div class="screen__background">
+			<span class="screen__background__shape screen__background__shape4"></span>
+			<span class="screen__background__shape screen__background__shape3"></span>		
+			<span class="screen__background__shape screen__background__shape2"></span>
+			<span class="screen__background__shape screen__background__shape1"></span>
+		</div>		
+	</div>
+</div>

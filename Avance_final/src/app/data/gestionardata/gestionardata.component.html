@@ -1,0 +1,110 @@
+
+<p-toast key="key1"></p-toast>
+<p-toast key="key2" position="center"></p-toast>
+<div class="GlobalDiv">
+    <div class="GlobalHeader" style="text-align: left;">
+        <h3>VER RECORRIDO</h3>
+    </div>
+    <div class="TableData">
+        <p-table #dt1 [value]="listData" responsiveLayout="scroll" [paginator]="true" [rows]="10" [globalFilterFields]="['titulo','descripcion','year']">
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button pButton pRipple type="button" icon="fa fa-power-off" label="Salir" class="p-button-rounded p-button-danger mr-2" (click)="salir()"></button>
+                    <button pButton pRipple type="button" icon="fa fa-server" label="Agregar" class="p-button-sm p-button-rounded p-button-success" (click)="upDataEvent(null)"></button>
+                    <span class="p-input-icon-left ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt1.filterGlobal(getEventValue($event), 'contains')" placeholder="Buscar registro..." />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="text-align: center;">Título</th>
+                    <th style="text-align: center;">Descripción</th>
+                    <th style="text-align: center;">Año</th>
+                    <th style="text-align: center;">Imagen</th>
+                    <th style="text-align: center;">Video</th>
+                    <th style="text-align: center;">Acciones</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-data>
+                <tr>
+                    <td style="text-align: center;">{{data.titulo}}</td>
+                    <td style="text-align: center;">{{data.descripcion}}</td>
+                    <td style="text-align: center;">{{data.year}}</td>
+                    <td style="text-align: center;"><img [src]="data.imagen" [alt]="data.titulo" width="100" class="shadow-4" /></td>
+                    <td style="text-align: center;"><a href="{{data.video}}" target="_blank">Video de {{data.titulo}}</a></td>
+                    <td style="text-align: center;">
+                        <button pButton pRipple type="button" icon="fa fa-pencil" class="p-button-sm p-button-success mr-2" (click)="upDataEvent(data)"></button>
+                        <button pButton pRipple type="button" icon="fa fa-trash" class="p-button-sm p-button-danger" (click)="borrar(data)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">
+                    En total hay {{listData ? listData.length : 0 }} productos.
+                </div>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<p-dialog header="{{upDataTitle}}" [(visible)]="upData" [style]="{width: '800px', height: '500px'}" >
+    <form [formGroup]="dataForm" (ngSubmit)="guardar()">
+        <div class="card">
+            <div class="grid">
+                <div class="col-7">
+                    <div class="card">
+                        <div class="field grid">
+                            <label for="title" class="col-12 mb-2 md:col-4 md:mb-0">Título</label>
+                            <div class="col-12 md:col-8">
+                                <input id="title" type="text" name="titulo" formControlName="titulo" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" required>
+                                <small id="username2-help" class="p-error block" *ngIf="dataForm.controls['titulo'].errors">* El titulo es obligatorio.</small>
+                            </div>
+                        </div>
+                        <div class="field grid">
+                            <label for="description" class="col-12 mb-2 md:col-4 md:mb-0">Descripción</label>
+                            <div class="col-12 md:col-8">
+                                <textarea [rows]="5" [cols]="30" name="descripcion" formControlName="descripcion" pInputTextarea class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+                            </div>
+                        </div>
+                        <div class="field grid">
+                            <label for="year" class="col-12 mb-2 md:col-4 md:mb-0">Año</label>
+                            <div class="col-12 md:col-8">
+                                <input id="year" type="text" name="year" formControlName="year" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <p-divider layout="vertical">
+                        <b>&</b>
+                    </p-divider>
+                </div>
+                <div class="col-4 flex align-items-center justify-content-center">
+                    <p-image src="assets/galleria/data.jpeg" alt="Image" width="235" [preview]="true"></p-image>
+                </div>
+            </div>
+            <br><label class="mb-2">Imágen</label>
+            <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)="onUpload($event)" accept="image/*"></p-fileUpload>
+            <!-- <p-fileUpload id="imagen" name="demo[]" (onUpload)="onUpload($event)" accept="image/*">
+                <ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length">
+                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                    </ul>
+                </ng-template>
+            </p-fileUpload> -->
+            <br><label for="video">Video</label>
+            <p-fileUpload name="myVideo[]" [customUpload]="true" (uploadHandler)="onUploadVideo($event)" accept="video/mp4,video/x-m4v,video/*">></p-fileUpload>
+            <!-- <p-fileUpload id="video" name="demo[]" url="./upload.php" (onUpload)="onUpload($event)" accept="video/mp4,video/x-m4v,video/*">
+                <ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length">
+                        <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+                    </ul>
+                </ng-template>
+            </p-fileUpload> -->
+        </div>
+    </form>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple type="button" icon="fa fa-save" label="Guardar" class="p-button-sm p-button-success" (click)="guardar()"></button>
+        </ng-template>
+</p-dialog>

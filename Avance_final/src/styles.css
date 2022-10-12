@@ -1,0 +1,52 @@
+/* You can add global styles to this file, and also import other style files */
+/* Estilos que se va a aplicar a la ventana general que presenta la data */
+.GlobalDiv{
+    background-color: rgb(240, 243, 247); 
+    width: 100%;
+    height: 100%; 
+    position: absolute;
+    display: flex;
+    justify-content: center;
+}
+.GlobalHeader{
+    background-color: #34495E;
+    color: aliceblue;
+    width: 100%;
+    position: absolute;
+    padding: 20px;
+}
+
+.TableData{
+    width: 70%;
+    color: black;
+    position: absolute;
+    margin-top: 80px;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.product-badge {
+    border-radius: 2px;
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+}
+.status-instock {
+    background: #C8E6C9;
+    color: #256029;
+}
+
+.status-outofstock {
+    background: #FFCDD2;
+    color: #C63737;
+}
+
+.status-lowstock {
+    background: #FEEDAF;
+    color: #8A5340;
+}
